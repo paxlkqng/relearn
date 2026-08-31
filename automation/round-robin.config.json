@@ -14,5 +14,12 @@
     "self-merge",
     "broad redesign"
   ],
+  "protectedPathPatterns": [
+    ".env",
+    ".env.*",
+    ".github/workflows/deploy*",
+    "db/migrations/**",
+    "infra/**"
+  ],
   "roles": ["planner", "builder", "reviewer", "tester", "fixer"]
 }
