@@ -108,3 +108,93 @@ export function queryProblemBank(
     .filter((problem) => !query.difficulty || problem.difficulty === query.difficulty)
     .slice(0, limit);
 }
+
+export function parseProblemJson(input: string): ProblemBankRecord[] {
+  const parsed: unknown = JSON.parse(input);
+  if (!Array.isArray(parsed)) {
+    throw new Error("Problem JSON import must be an array of records.");
+  }
+  return parsed as ProblemBankRecord[];
+}
+
+function parseCsvRows(input: string): string[][] {
+  const rows: string[][] = [];
+  let row: string[] = [];
+  let cell = "";
+  let quoted = false;
+
+  for (let index = 0; index < input.length; index += 1) {
+    const char = input[index];
+    const next = input[index + 1];
+
+    if (char === '"' && quoted && next === '"') {
+      cell += '"';
+      index += 1;
+    } else if (char === '"') {
+      quoted = !quoted;
+    } else if (char === "," && !quoted) {
+      row.push(cell);
+      cell = "";
+    } else if ((char === "\n" || char === "\r") && !quoted) {
+      if (char === "\r" && next === "\n") index += 1;
+      row.push(cell);
+      if (row.some((value) => value.length > 0)) rows.push(row);
+      row = [];
+      cell = "";
+    } else {
+      cell += char;
+    }
+  }
+
+  row.push(cell);
+  if (row.some((value) => value.length > 0)) rows.push(row);
+  return rows;
+}
+
+export function parseProblemCsv(input: string): ProblemBankRecord[] {
+  const rows = parseCsvRows(input);
+  const [headers, ...dataRows] = rows;
+  if (!headers?.length) return [];
+
+  const expected = [
+    "id",
+    "source",
+    "sourceProblemId",
+    "sourceUrl",
+    "licensingNote",
+    "solutionReference",
+    "primarySkill",
+    "prerequisiteSkills",
+    "difficulty",
+    "prompt",
+    "choices",
+    "correctChoiceId",
+    "explanation",
+  ];
+
+  for (const field of expected) {
+    if (!headers.includes(field)) {
+      throw new Error(`Problem CSV is missing required column: ${field}.`);
+    }
+  }
+
+  return dataRows.map((values) => {
+    const row = Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ""]));
+
+    return {
+      id: row.id,
+      source: row.source,
+      sourceProblemId: row.sourceProblemId,
+      sourceUrl: row.sourceUrl || undefined,
+      licensingNote: row.licensingNote,
+      solutionReference: row.solutionReference || undefined,
+      primarySkill: row.primarySkill,
+      prerequisiteSkills: JSON.parse(row.prerequisiteSkills || "[]") as string[],
+      difficulty: row.difficulty as ProblemDifficulty,
+      prompt: row.prompt,
+      choices: JSON.parse(row.choices || "[]") as ProblemBankRecord["choices"],
+      correctChoiceId: row.correctChoiceId,
+      explanation: row.explanation,
+    };
+  });
+}
