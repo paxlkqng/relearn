@@ -1,4 +1,4 @@
-import sampleProblemBank from "@/data/problem-bank/sample.json";
+import sampleProblemBank from "../../data/problem-bank/sample.json";
 import { applyEvidence, chooseNextSkill, diagnoseFailure, seedMasteryState, type MasteryState, type MistakeCategory } from "./mastery-engine";
 import { queryProblemBank, type ProblemBankRecord } from "./problem-bank";
 import { seedSkills } from "./skill-graph";
@@ -30,7 +30,7 @@ const state: LearningState = {
   sessions: [],
 };
 
-const problemBank = sampleProblemBank as ProblemBankRecord[];
+const problemBank = sampleProblemBank as unknown as ProblemBankRecord[];
 
 function requireSession(sessionId: string) {
   const session = state.sessions.find((item) => item.id === sessionId);
