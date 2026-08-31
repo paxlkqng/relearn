@@ -1,0 +1,26 @@
+[
+  {
+    "id": "hendrycks-math",
+    "name": "MATH Dataset",
+    "homepage": "https://github.com/hendrycks/math",
+    "license": "MIT",
+    "status": "approved-for-import",
+    "notes": "Use algebra/prealgebra records as candidate material. Preserve source split/path, original level/type, problem text, and solution provenance. Do not imply that competition difficulty equals Relearn foundation difficulty."
+  },
+  {
+    "id": "openstax-algebra-trig-2e",
+    "name": "OpenStax Algebra and Trigonometry 2e",
+    "homepage": "https://openstax.org/details/books/algebra-and-trigonometry-2e",
+    "license": "CC BY-NC-SA 4.0 with additional OpenStax AI-ingestion restriction notice",
+    "status": "reference-only-until-reviewed",
+    "notes": "Useful for curriculum mapping and external links. Do not bulk-ingest textbook exercises into the ChatGPT-connected Relearn problem bank unless the current OpenStax AI-use restriction has been explicitly resolved."
+  },
+  {
+    "id": "relearn-original",
+    "name": "Relearn original diagnostics",
+    "homepage": null,
+    "license": "Project-owned",
+    "status": "approved-for-import",
+    "notes": "Keep hand-authored diagnostic items distinguishable from externally sourced problems."
+  }
+]
