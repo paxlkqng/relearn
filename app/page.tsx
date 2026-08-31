@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { seedSkills } from "@/src/lib/skill-graph";
 
 const statusLabel = {
@@ -21,7 +23,7 @@ export default function HomePage() {
             문제를 많이 푸는 것보다, 왜 틀렸는지와 어떤 선행 개념이 비었는지를 추적한다.
           </p>
         </div>
-        <button className="primary">오늘 세션 시작</button>
+        <Link href="/practice" className="primary primaryLink">오늘 세션 시작</Link>
       </header>
 
       <section className="heroGrid">
@@ -32,7 +34,7 @@ export default function HomePage() {
           <div className="metricRow">
             <div><strong>64%</strong><span>현재 mastery</span></div>
             <div><strong>42m</strong><span>예상 시간</span></div>
-            <div><strong>12</strong><span>선별 문제</span></div>
+            <div><strong>4</strong><span>v0.1 선별 문제</span></div>
           </div>
         </article>
 
