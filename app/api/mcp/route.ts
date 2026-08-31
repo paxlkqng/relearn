@@ -1,5 +1,5 @@
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/server";
-import { createRelearnMcpServer } from "@/src/lib/mcp-server";
+import { createRelearnMcpServer } from "../../../src/lib/mcp-server";
 
 export const runtime = "nodejs";
 
