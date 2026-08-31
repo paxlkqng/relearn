@@ -14,16 +14,25 @@ Planner → Builder → Reviewer → Tester → Fixer → Reviewer → Tester �
 
 Maximum: 3 repair rounds.
 
-## Executable harness
-The repository now includes `scripts/agent-round-robin.mjs` and `automation/round-robin.config.json`.
+## Two layers
+The automation is deliberately split into two layers:
 
-Run a safe harness check without executing role agents:
+- `scripts/agent-round-robin.mjs` owns bounded role execution, repair limits, repeated-failure termination, and repository checks.
+- `scripts/nightly-agent-run.mjs` owns the safe Git lifecycle: clean-worktree check, base update, dedicated branch, commit, push, and draft PR creation.
+
+This keeps the safety/termination logic vendor-neutral while still giving a real unattended environment one command to run.
+
+## Dry run
+Validate the entire lifecycle without changing branches or pushing anything:
 
 ```bash
-npm run agent:dry-run -- --issue=5
+npm run agent:nightly:dry-run -- --issue=5
 ```
 
-Run a real bounded cycle by supplying commands for the roles that exist in the local agent environment:
+CI should use this path because it exercises configuration and the inner round-robin without mutating Git state.
+
+## Real run
+Supply commands for the coding-agent roles available in the host environment:
 
 ```bash
 RELEARN_AGENT_ISSUE=5 \
@@ -32,17 +41,37 @@ RELEARN_BUILDER_CMD='your-builder-command' \
 RELEARN_REVIEWER_CMD='your-reviewer-command' \
 RELEARN_TESTER_CMD='your-tester-command' \
 RELEARN_FIXER_CMD='your-fixer-command' \
-npm run agent:run
+npm run agent:nightly
 ```
 
-The harness deliberately does not hard-code a model vendor or CLI. Codex, Claude Code, or another coding agent can be plugged in later without changing the safety/termination logic.
+Optional base override:
 
-Each cycle always runs these repository checks after the role commands:
-- `npm test`
-- `npm run typecheck`
-- `npm run build`
+```bash
+npm run agent:nightly -- --issue=5 --base=main
+```
 
-Generated machine-readable reports are written to `automation/reports/` and ignored by Git.
+The repository does not hard-code Codex, Claude Code, or another model vendor. The host machine supplies those commands and credentials.
+
+## What the lifecycle runner does
+1. Requires a clean working tree.
+2. Fetches origin and fast-forwards the configured base branch.
+3. Creates `agent/issue-<n>-<timestamp>`.
+4. Runs the bounded round-robin harness.
+5. Requires `npm test`, `npm run typecheck`, and `npm run build` to pass through that harness.
+6. Rejects protected unattended paths before commit/push.
+7. Commits and pushes the bounded change.
+8. If GitHub CLI is authenticated, opens a **draft** PR. It never merges it.
+
+If `gh` is unavailable, the branch is still pushed and the runner exits with a clear message so a human can open the PR later.
+
+## Protected unattended paths
+The config currently blocks unattended changes to:
+- `.env` / `.env.*`
+- deployment workflows
+- database migrations
+- `infra/`
+
+This is a path-level guard in addition to the behavioral rules below. It is intentionally conservative and can be extended later.
 
 ## Hard stop conditions
 Stop when any is true:
@@ -62,14 +91,16 @@ Stop when any is true:
 - merging its own PR
 
 ## Required output
-Every overnight run should leave:
+Every real overnight run should leave:
 - dedicated branch
-- focused commits
-- draft PR
+- focused commit(s)
+- draft PR when `gh` is available
 - summary of implemented behavior
 - tests executed and results
 - unresolved risks
 - explicit questions requiring human decision
+
+Machine-readable round reports are written to `automation/reports/` and ignored by Git.
 
 ## Review priorities
 1. Does this improve the learning loop?
@@ -78,7 +109,5 @@ Every overnight run should leave:
 4. Does the implementation accidentally let the model invent state?
 5. Is this simpler than the previous version?
 
-## Automation boundary
-Feature selection remains intentionally conservative. Only issues explicitly approved for unattended work should be passed to the harness. The harness owns iteration limits and test gates; the external agent runner owns branch creation, commits, and draft-PR creation.
-
-The repository does not store agent API keys or credentials. Production deploys, destructive migrations, self-merge, and auth/secrets changes remain outside unattended automation.
+## Remaining host requirement
+A real unattended coding run still requires an installed/authenticated agent CLI (for example Codex or Claude Code), Git credentials, and optionally authenticated GitHub CLI for automatic draft-PR creation. Credentials stay on the host and are never stored in this repository.
