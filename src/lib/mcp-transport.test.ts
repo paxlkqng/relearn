@@ -18,10 +18,7 @@ const expectedTools = [
 ].sort();
 
 function createClient() {
-  return new Client(
-    { name: "relearn-contract-test", version: "0.1.0" },
-    { versionNegotiation: { mode: { pin: "2026-07-28" } } },
-  );
+  return new Client({ name: "relearn-contract-test", version: "0.1.0" });
 }
 
 function structured<T>(result: { structuredContent?: unknown }): T {
