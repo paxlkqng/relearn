@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { ingestProblemRecords, queryProblemBank } from "./problem-bank";
+import {
+  ingestProblemRecords,
+  parseProblemCsv,
+  parseProblemJson,
+  queryProblemBank,
+} from "./problem-bank";
 import { starterProblems, type Problem } from "./problems";
 
 describe("problem bank ingestion", () => {
@@ -44,5 +49,55 @@ describe("problem bank ingestion", () => {
 
     expect(coreRational).toHaveLength(1);
     expect(coreRational[0]?.id).toBe("rf-ha-001");
+  });
+
+  it("parses a curated JSON batch", () => {
+    const parsed = parseProblemJson(JSON.stringify(starterProblems.slice(0, 2)));
+    const result = ingestProblemRecords(parsed);
+
+    expect(result.rejected).toHaveLength(0);
+    expect(result.accepted).toHaveLength(2);
+  });
+
+  it("parses a curated CSV batch with JSON-encoded list fields", () => {
+    const headers = [
+      "id",
+      "source",
+      "sourceProblemId",
+      "sourceUrl",
+      "licensingNote",
+      "solutionReference",
+      "primarySkill",
+      "prerequisiteSkills",
+      "difficulty",
+      "prompt",
+      "choices",
+      "correctChoiceId",
+      "explanation",
+    ].join(",");
+
+    const csvEscape = (value: string) => `"${value.replaceAll('"', '""')}"`;
+    const problem = starterProblems[0];
+    const row = [
+      problem.id,
+      problem.source,
+      problem.sourceProblemId,
+      problem.sourceUrl ?? "",
+      problem.licensingNote,
+      problem.solutionReference ?? "",
+      problem.primarySkill,
+      JSON.stringify(problem.prerequisiteSkills),
+      problem.difficulty,
+      problem.prompt,
+      JSON.stringify(problem.choices),
+      problem.correctChoiceId,
+      problem.explanation,
+    ].map(csvEscape).join(",");
+
+    const parsed = parseProblemCsv(`${headers}\n${row}`);
+    const result = ingestProblemRecords(parsed);
+
+    expect(result.rejected).toHaveLength(0);
+    expect(result.accepted[0]?.sourceProblemId).toBe(problem.sourceProblemId);
   });
 });
