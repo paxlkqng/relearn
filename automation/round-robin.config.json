@@ -1,0 +1,18 @@
+{
+  "maxRepairRounds": 3,
+  "repeatFailureLimit": 2,
+  "requiredChecks": [
+    "npm test",
+    "npm run typecheck",
+    "npm run build"
+  ],
+  "forbiddenPatterns": [
+    "production deploy",
+    "destructive migration",
+    "secrets",
+    "auth policy",
+    "self-merge",
+    "broad redesign"
+  ],
+  "roles": ["planner", "builder", "reviewer", "tester", "fixer"]
+}
