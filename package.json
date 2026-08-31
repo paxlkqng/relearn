@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "mcp:stdio": "tsx server/mcp.ts"
+    "mcp:stdio": "tsx server/mcp.ts",
+    "agent:run": "node scripts/agent-round-robin.mjs",
+    "agent:dry-run": "node scripts/agent-round-robin.mjs --dry-run"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "2.0.0",
