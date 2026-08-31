@@ -3,26 +3,37 @@ export type ProblemChoice = {
   label: string;
 };
 
+export type ProblemDifficulty = "foundation" | "core" | "bridge";
+
 export type Problem = {
   id: string;
   source: string;
   sourceProblemId: string;
+  sourceUrl?: string;
+  licensingNote: string;
+  solutionReference?: string;
   primarySkill: string;
   prerequisiteSkills: string[];
-  difficulty: "foundation" | "core" | "bridge";
+  difficulty: ProblemDifficulty;
   prompt: string;
   choices: ProblemChoice[];
   correctChoiceId: string;
   explanation: string;
 };
 
+const relearnSeedProvenance = {
+  source: "Relearn seed",
+  licensingNote: "Original Relearn placeholder content. Replace with vetted-source records for production study use.",
+  solutionReference: "Embedded explanation",
+} as const;
+
 // Temporary curated seed set for the v0.1 interaction loop.
-// These are intentionally small and hand-authored placeholders; production
-// ingestion must preserve provenance and licensing metadata from vetted sources.
+// These are intentionally small hand-authored placeholders. Production ingestion
+// must preserve provenance and licensing metadata from vetted sources.
 export const starterProblems: Problem[] = [
   {
     id: "rf-hole-001",
-    source: "Relearn seed",
+    ...relearnSeedProvenance,
     sourceProblemId: "rf-hole-001",
     primarySkill: "rational-functions",
     prerequisiteSkills: ["factoring"],
@@ -40,7 +51,7 @@ export const starterProblems: Problem[] = [
   },
   {
     id: "rf-va-001",
-    source: "Relearn seed",
+    ...relearnSeedProvenance,
     sourceProblemId: "rf-va-001",
     primarySkill: "rational-functions",
     prerequisiteSkills: ["factoring"],
@@ -58,7 +69,7 @@ export const starterProblems: Problem[] = [
   },
   {
     id: "rf-ha-001",
-    source: "Relearn seed",
+    ...relearnSeedProvenance,
     sourceProblemId: "rf-ha-001",
     primarySkill: "rational-functions",
     prerequisiteSkills: ["polynomial-division"],
@@ -76,7 +87,7 @@ export const starterProblems: Problem[] = [
   },
   {
     id: "rf-slant-001",
-    source: "Relearn seed",
+    ...relearnSeedProvenance,
     sourceProblemId: "rf-slant-001",
     primarySkill: "rational-functions",
     prerequisiteSkills: ["polynomial-division"],
