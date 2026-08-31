@@ -1,4 +1,4 @@
-import { getPrerequisiteChain, seedSkills } from "@/src/lib/skill-graph";
+import { getPrerequisiteChain, seedSkills } from "./skill-graph";
 
 export type MistakeCategory =
   | "concept"
