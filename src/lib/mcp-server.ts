@@ -48,7 +48,7 @@ export function createRelearnMcpServer() {
       description: "Fetch verified problems with source provenance. Correct answers are withheld until an attempt is recorded.",
       inputSchema: z.object({
         primarySkill: z.string().optional(),
-        difficulty: z.enum(["easy", "medium", "hard"]).optional(),
+        difficulty: z.enum(["foundation", "core", "bridge"]).optional(),
         limit: z.number().int().min(1).max(50).default(10),
       }),
     },
