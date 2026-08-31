@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "mcp:stdio": "tsx server/mcp.ts",
+    "problem-bank:import:math": "node scripts/import-hendrycks-math.mjs",
     "agent:run": "node scripts/agent-round-robin.mjs",
     "agent:dry-run": "node scripts/agent-round-robin.mjs --dry-run",
     "agent:nightly": "node scripts/nightly-agent-run.mjs",
