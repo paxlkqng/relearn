@@ -5,7 +5,7 @@ import {
   diagnoseFailure,
   seedMasteryState,
   type MasteryState,
-} from "@/src/lib/mastery-engine";
+} from "./mastery-engine";
 
 describe("mastery engine", () => {
   it("updates mastery deterministically and keeps it in bounds", () => {
