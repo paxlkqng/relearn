@@ -1,0 +1,59 @@
+[
+  {
+    "id": "sample-factoring-001",
+    "source": "Relearn seed",
+    "sourceProblemId": "sample-factoring-001",
+    "licensingNote": "Original Relearn placeholder content. Replace with vetted-source records for production study use.",
+    "solutionReference": "Embedded explanation",
+    "primarySkill": "factoring",
+    "prerequisiteSkills": ["equation-manipulation"],
+    "difficulty": "foundation",
+    "prompt": "Which expression is equivalent to x² - 9?",
+    "choices": [
+      { "id": "a", "label": "(x - 3)(x + 3)" },
+      { "id": "b", "label": "(x - 9)(x + 1)" },
+      { "id": "c", "label": "(x - 3)²" },
+      { "id": "d", "label": "x(x - 9)" }
+    ],
+    "correctChoiceId": "a",
+    "explanation": "This is a difference of squares: a² - b² = (a - b)(a + b)."
+  },
+  {
+    "id": "sample-rational-001",
+    "source": "Relearn seed",
+    "sourceProblemId": "sample-rational-001",
+    "licensingNote": "Original Relearn placeholder content. Replace with vetted-source records for production study use.",
+    "solutionReference": "Embedded explanation",
+    "primarySkill": "rational-functions",
+    "prerequisiteSkills": ["factoring"],
+    "difficulty": "core",
+    "prompt": "Why does a canceled denominator factor create a hole instead of a vertical asymptote?",
+    "choices": [
+      { "id": "a", "label": "The original function is undefined only at the canceled point while nearby values follow the reduced expression" },
+      { "id": "b", "label": "Canceled factors always make the function equal to zero" },
+      { "id": "c", "label": "The numerator degree becomes larger" },
+      { "id": "d", "label": "The graph becomes periodic" }
+    ],
+    "correctChoiceId": "a",
+    "explanation": "Canceling describes nearby equivalent values, but it does not restore the excluded input in the original function."
+  },
+  {
+    "id": "sample-trig-001",
+    "source": "Relearn seed",
+    "sourceProblemId": "sample-trig-001",
+    "licensingNote": "Original Relearn placeholder content. Replace with vetted-source records for production study use.",
+    "solutionReference": "Embedded explanation",
+    "primarySkill": "unit-circle",
+    "prerequisiteSkills": [],
+    "difficulty": "foundation",
+    "prompt": "On the unit circle, what does cos(θ) represent?",
+    "choices": [
+      { "id": "a", "label": "The x-coordinate" },
+      { "id": "b", "label": "The y-coordinate" },
+      { "id": "c", "label": "The radius" },
+      { "id": "d", "label": "The slope of the tangent line" }
+    ],
+    "correctChoiceId": "a",
+    "explanation": "A unit-circle point at angle θ has coordinates (cos θ, sin θ)."
+  }
+]
