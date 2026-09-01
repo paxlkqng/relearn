@@ -1,0 +1,37 @@
+{
+  "name": "relearn",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "mcp:stdio": "tsx server/mcp.ts",
+    "problem-bank:import:math": "node scripts/import-hendrycks-math.mjs",
+    "agent:run": "node scripts/agent-round-robin.mjs",
+    "agent:dry-run": "node scripts/agent-round-robin.mjs --dry-run",
+    "agent:nightly": "node scripts/nightly-agent-run.mjs",
+    "agent:nightly:dry-run": "node scripts/nightly-agent-run.mjs --dry-run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.0.0",
+    "@modelcontextprotocol/server": "2.0.0",
+    "next": "16.3.3",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.3.3",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.4"
+  }
+}

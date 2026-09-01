@@ -1,0 +1,48 @@
+[
+  {
+    "id": "hendrycks-math",
+    "name": "MATH Dataset",
+    "homepage": "https://github.com/hendrycks/math",
+    "license": "Repository marked MIT; dataset redistribution provenance requires separate review",
+    "licenseUrl": "https://github.com/hendrycks/math/blob/main/LICENSE",
+    "licenseVerifiedAt": "2026-09-01",
+    "status": "blocked-license-review",
+    "notes": "Do not import into Relearn while the upstream dataset distribution/copyright status remains ambiguous. The repository license alone is not treated as sufficient proof that every competition problem may be redistributed. Keep the importer available for future use only after provenance is re-cleared."
+  },
+  {
+    "id": "deepmind-mathematics-dataset",
+    "name": "DeepMind Mathematics Dataset",
+    "homepage": "https://github.com/google-deepmind/mathematics_dataset",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://github.com/google-deepmind/mathematics_dataset/blob/master/LICENSE",
+    "licenseVerifiedAt": "2026-09-01",
+    "status": "approved-for-import",
+    "notes": "School-level algebra/arithmetic/calculus/polynomial question generator and pre-generated dataset. Preserve module/split/example provenance. Relearn may adapt generated free-response examples into reviewed diagnostic formats while keeping attribution and noting modifications."
+  },
+  {
+    "id": "symbolic-math-dataset",
+    "name": "Symbolic Math Dataset",
+    "homepage": "https://github.com/vdhanraj/Symbolic-Math-Dataset",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://github.com/vdhanraj/Symbolic-Math-Dataset/blob/main/LICENSE",
+    "licenseVerifiedAt": "2026-09-01",
+    "status": "approved-for-import",
+    "notes": "Repository includes generated arithmetic/symbolic CSV datasets and the generator under Apache-2.0. Suitable as an openly licensed source for deterministic prerequisite diagnostics. Preserve repository commit/path plus row-level provenance; only map mathematically relevant problem types into Relearn skills."
+  },
+  {
+    "id": "openstax-algebra-trig-2e",
+    "name": "OpenStax Algebra and Trigonometry 2e",
+    "homepage": "https://openstax.org/details/books/algebra-and-trigonometry-2e",
+    "license": "CC BY-NC-SA 4.0 with additional OpenStax AI-ingestion restriction notice",
+    "status": "reference-only-until-reviewed",
+    "notes": "Useful for curriculum mapping and external links. Do not bulk-ingest textbook exercises into the ChatGPT-connected Relearn problem bank unless the current OpenStax AI-use restriction has been explicitly resolved."
+  },
+  {
+    "id": "relearn-original",
+    "name": "Relearn original diagnostics",
+    "homepage": null,
+    "license": "Project-owned",
+    "status": "approved-for-import",
+    "notes": "Keep hand-authored diagnostic items distinguishable from externally sourced problems."
+  }
+]
