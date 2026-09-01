@@ -10,6 +10,16 @@
     "notes": "Do not import into Relearn while the upstream dataset distribution/copyright status remains ambiguous. The repository license alone is not treated as sufficient proof that every competition problem may be redistributed. Keep the importer available for future use only after provenance is re-cleared."
   },
   {
+    "id": "deepmind-mathematics-dataset",
+    "name": "DeepMind Mathematics Dataset",
+    "homepage": "https://github.com/google-deepmind/mathematics_dataset",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://github.com/google-deepmind/mathematics_dataset/blob/master/LICENSE",
+    "licenseVerifiedAt": "2026-09-01",
+    "status": "approved-for-import",
+    "notes": "School-level algebra/arithmetic/calculus/polynomial question generator and pre-generated dataset. Preserve module/split/example provenance. Relearn may adapt generated free-response examples into reviewed diagnostic formats while keeping attribution and noting modifications."
+  },
+  {
     "id": "symbolic-math-dataset",
     "name": "Symbolic Math Dataset",
     "homepage": "https://github.com/vdhanraj/Symbolic-Math-Dataset",
