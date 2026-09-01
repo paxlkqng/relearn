@@ -11,6 +11,28 @@ import {
   startSession,
 } from "./mcp-learning-service";
 
+type LearningService = {
+  getMastery: typeof getMastery;
+  getWeakSkills: typeof getWeakSkills;
+  getTodayPlan: typeof getTodayPlan;
+  getProblems: typeof getProblems;
+  getMistakeHistory: typeof getMistakeHistory;
+  startSession: typeof startSession;
+  recordAttempt: typeof recordAttempt;
+  completeSession: typeof completeSession;
+};
+
+const localDevelopmentService: LearningService = {
+  getMastery,
+  getWeakSkills,
+  getTodayPlan,
+  getProblems,
+  getMistakeHistory,
+  startSession,
+  recordAttempt,
+  completeSession,
+};
+
 function textResult(data: Record<string, unknown>) {
   return {
     content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }],
@@ -18,13 +40,17 @@ function textResult(data: Record<string, unknown>) {
   };
 }
 
-export function createRelearnMcpServer() {
+/**
+ * Hosted callers should inject a learner-scoped service built from trusted request
+ * identity. The no-argument path is retained only for local/contract-test usage.
+ */
+export function createRelearnMcpServer(service: LearningService = localDevelopmentService) {
   const server = new McpServer({ name: "relearn", version: "0.1.0" });
 
   server.registerTool(
     "get_mastery",
     { description: "Read deterministic mastery state for every Relearn skill." },
-    async () => textResult({ skills: getMastery() }),
+    async () => textResult({ skills: service.getMastery() }),
   );
 
   server.registerTool(
@@ -33,13 +59,13 @@ export function createRelearnMcpServer() {
       description: "Return the weakest skills by deterministic mastery evidence.",
       inputSchema: z.object({ limit: z.number().int().min(1).max(20).default(5) }),
     },
-    async ({ limit }) => textResult({ skills: getWeakSkills(limit) }),
+    async ({ limit }) => textResult({ skills: service.getWeakSkills(limit) }),
   );
 
   server.registerTool(
     "get_today_plan",
     { description: "Return Relearn's deterministic recommendation for the next skill to repair." },
-    async () => textResult({ plan: getTodayPlan() }),
+    async () => textResult({ plan: service.getTodayPlan() }),
   );
 
   server.registerTool(
@@ -52,7 +78,7 @@ export function createRelearnMcpServer() {
         limit: z.number().int().min(1).max(50).default(10),
       }),
     },
-    async (input) => textResult({ problems: getProblems(input) }),
+    async (input) => textResult({ problems: service.getProblems(input) }),
   );
 
   server.registerTool(
@@ -61,7 +87,7 @@ export function createRelearnMcpServer() {
       description: "Read recent incorrect attempts for tutoring and diagnosis.",
       inputSchema: z.object({ limit: z.number().int().min(1).max(100).default(20) }),
     },
-    async ({ limit }) => textResult({ mistakes: getMistakeHistory(limit) }),
+    async ({ limit }) => textResult({ mistakes: service.getMistakeHistory(limit) }),
   );
 
   server.registerTool(
@@ -70,7 +96,7 @@ export function createRelearnMcpServer() {
       description: "Start a Relearn study session using verified problem ids.",
       inputSchema: z.object({ problemIds: z.array(z.string()).min(1).max(50) }),
     },
-    async ({ problemIds }) => textResult({ session: startSession(problemIds) }),
+    async ({ problemIds }) => textResult({ session: service.startSession(problemIds) }),
   );
 
   server.registerTool(
@@ -85,7 +111,7 @@ export function createRelearnMcpServer() {
         mistakeCategory: z.enum(["concept", "algebra-manipulation", "prerequisite", "careless", "unknown"]).optional(),
       }),
     },
-    async (input) => textResult({ result: recordAttempt(input) }),
+    async (input) => textResult({ result: service.recordAttempt(input) }),
   );
 
   server.registerTool(
@@ -94,7 +120,7 @@ export function createRelearnMcpServer() {
       description: "Complete a Relearn study session and return its summary.",
       inputSchema: z.object({ sessionId: z.string().min(1) }),
     },
-    async ({ sessionId }) => textResult({ session: completeSession(sessionId) }),
+    async ({ sessionId }) => textResult({ session: service.completeSession(sessionId) }),
   );
 
   return server;
