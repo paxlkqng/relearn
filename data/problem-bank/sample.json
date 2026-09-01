@@ -55,5 +55,45 @@
     ],
     "correctChoiceId": "a",
     "explanation": "A unit-circle point at angle θ has coordinates (cos θ, sin θ)."
+  },
+  {
+    "id": "deepmind-linear-system-readme-001",
+    "source": "DeepMind Mathematics Dataset",
+    "sourceProblemId": "README-example-linear-system-r",
+    "sourceUrl": "https://github.com/google-deepmind/mathematics_dataset/blob/master/README.md",
+    "licensingNote": "Apache-2.0 source example from the DeepMind Mathematics Dataset README. Relearn added multiple-choice distractors and an explanatory note; original question/answer provenance is preserved.",
+    "solutionReference": "DeepMind Mathematics Dataset README example answer: r = 4",
+    "primarySkill": "equation-manipulation",
+    "prerequisiteSkills": [],
+    "difficulty": "core",
+    "prompt": "Solve -42r + 27c = -1167 and 130r + 4c = 372 for r.",
+    "choices": [
+      { "id": "a", "label": "-4" },
+      { "id": "b", "label": "4" },
+      { "id": "c", "label": "9" },
+      { "id": "d", "label": "13" }
+    ],
+    "correctChoiceId": "b",
+    "explanation": "Eliminate or substitute one variable from the two equations. The consistent solution has r = 4 (and c = -37), which satisfies both equations."
+  },
+  {
+    "id": "deepmind-function-composition-readme-001",
+    "source": "DeepMind Mathematics Dataset",
+    "sourceProblemId": "README-example-function-composition",
+    "sourceUrl": "https://github.com/google-deepmind/mathematics_dataset/blob/master/README.md",
+    "licensingNote": "Apache-2.0 source example from the DeepMind Mathematics Dataset README. Relearn added multiple-choice distractors and an explanatory note; original question/answer provenance is preserved.",
+    "solutionReference": "DeepMind Mathematics Dataset README example answer: 54a - 30",
+    "primarySkill": "function-transformations",
+    "prerequisiteSkills": ["equation-manipulation"],
+    "difficulty": "core",
+    "prompt": "Let x(g) = 9g + 1, q(c) = 2c + 1, f(i) = 3i - 39, and w(j) = q(x(j)). What is f(w(a))?",
+    "choices": [
+      { "id": "a", "label": "18a + 3" },
+      { "id": "b", "label": "54a - 30" },
+      { "id": "c", "label": "54a - 36" },
+      { "id": "d", "label": "27a - 30" }
+    ],
+    "correctChoiceId": "b",
+    "explanation": "First compose q(x(a)) = 2(9a + 1) + 1 = 18a + 3. Then f(18a + 3) = 3(18a + 3) - 39 = 54a - 30."
   }
 ]
