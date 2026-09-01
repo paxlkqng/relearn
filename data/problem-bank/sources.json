@@ -3,11 +3,21 @@
     "id": "hendrycks-math",
     "name": "MATH Dataset",
     "homepage": "https://github.com/hendrycks/math",
-    "license": "MIT",
+    "license": "Repository marked MIT; dataset redistribution provenance requires separate review",
     "licenseUrl": "https://github.com/hendrycks/math/blob/main/LICENSE",
     "licenseVerifiedAt": "2026-09-01",
+    "status": "blocked-license-review",
+    "notes": "Do not import into Relearn while the upstream dataset distribution/copyright status remains ambiguous. The repository license alone is not treated as sufficient proof that every competition problem may be redistributed. Keep the importer available for future use only after provenance is re-cleared."
+  },
+  {
+    "id": "symbolic-math-dataset",
+    "name": "Symbolic Math Dataset",
+    "homepage": "https://github.com/vdhanraj/Symbolic-Math-Dataset",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://github.com/vdhanraj/Symbolic-Math-Dataset/blob/main/LICENSE",
+    "licenseVerifiedAt": "2026-09-01",
     "status": "approved-for-import",
-    "notes": "Use algebra/prealgebra records as candidate material. Preserve source split/path, original level/type, problem text, and solution provenance. Do not imply that competition difficulty equals Relearn foundation difficulty. Imported candidates remain review-only until mapped into the runtime problem contract."
+    "notes": "Repository includes generated arithmetic/symbolic CSV datasets and the generator under Apache-2.0. Suitable as an openly licensed source for deterministic prerequisite diagnostics. Preserve repository commit/path plus row-level provenance; only map mathematically relevant problem types into Relearn skills."
   },
   {
     "id": "openstax-algebra-trig-2e",
