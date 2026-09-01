@@ -4,8 +4,10 @@
     "name": "MATH Dataset",
     "homepage": "https://github.com/hendrycks/math",
     "license": "MIT",
+    "licenseUrl": "https://github.com/hendrycks/math/blob/main/LICENSE",
+    "licenseVerifiedAt": "2026-09-01",
     "status": "approved-for-import",
-    "notes": "Use algebra/prealgebra records as candidate material. Preserve source split/path, original level/type, problem text, and solution provenance. Do not imply that competition difficulty equals Relearn foundation difficulty."
+    "notes": "Use algebra/prealgebra records as candidate material. Preserve source split/path, original level/type, problem text, and solution provenance. Do not imply that competition difficulty equals Relearn foundation difficulty. Imported candidates remain review-only until mapped into the runtime problem contract."
   },
   {
     "id": "openstax-algebra-trig-2e",
