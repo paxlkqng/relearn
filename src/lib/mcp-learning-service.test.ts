@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
+import { InMemoryLearningRepository } from "./learning-repository";
 import {
   completeSession,
+  createLearningService,
   getMastery,
   getMistakeHistory,
   getProblems,
@@ -60,5 +62,32 @@ describe("MCP learning service", () => {
   it("produces a next-study plan from deterministic state", () => {
     const plan = getTodayPlan();
     expect(plan.nextSkillId).toBeTruthy();
+  });
+
+  it("isolates sessions, mistakes, and mastery by trusted learner id", () => {
+    const repository = new InMemoryLearningRepository();
+    const learnerA = createLearningService({ learnerId: "learner-a", repository });
+    const learnerB = createLearningService({ learnerId: "learner-b", repository });
+    const [problem] = learnerA.getProblems({ primarySkill: "factoring", limit: 1 });
+    const initialB = learnerB.getMastery().find((item) => item.skillId === "factoring")!.mastery;
+    const sessionA = learnerA.startSession([problem.id]);
+
+    learnerA.recordAttempt({
+      sessionId: sessionA.id,
+      problemId: problem.id,
+      selectedChoiceId: problem.choices[0].id,
+      durationMs: 1000,
+      mistakeCategory: "concept",
+    });
+
+    expect(learnerB.getMistakeHistory()).toEqual([]);
+    expect(() => learnerB.completeSession(sessionA.id)).toThrow(`Unknown session: ${sessionA.id}`);
+    expect(learnerB.getMastery().find((item) => item.skillId === "factoring")!.mastery).toBe(initialB);
+  });
+
+  it("rejects an empty learner id at the service boundary", () => {
+    expect(() =>
+      createLearningService({ learnerId: "   ", repository: new InMemoryLearningRepository() }),
+    ).toThrow("A trusted learner id is required.");
   });
 });
